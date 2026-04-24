@@ -1,0 +1,670 @@
+/* ── Luxury Record Shop — Design Tokens ────────────────────── */
+:root {
+    --bg-page:        #0c0b09;
+    --bg-card:        #1d1a14;
+    --bg-filter:      #111009;
+    --bg-input:       #26221a;
+    --bg-header:      #070604;
+
+    --gold:           #c8a45a;
+    --gold-light:     #e2c27e;
+    --gold-dim:       rgba(200, 164, 90, 0.12);
+    --gold-border:    rgba(200, 164, 90, 0.28);
+    --gold-hover:     rgba(200, 164, 90, 0.55);
+
+    --text:           #f0e8d8;
+    --text-sub:       #b8a98a;
+    --text-muted:     #6e6450;
+
+    --shadow-card:    0 2px 16px rgba(0, 0, 0, 0.65);
+    --shadow-hover:   0 12px 40px rgba(200, 164, 90, 0.18);
+    --radius:         10px;
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg-page);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+}
+
+a { color: var(--gold); text-decoration: none; }
+a:hover { color: var(--gold-light); }
+
+/* ── Header ────────────────────────────────────────────────── */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 32px;
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--gold-border);
+    box-shadow: 0 1px 30px rgba(0, 0, 0, 0.8);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header img { height: 40px; }
+
+header div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+header #links {
+    gap: 32px;
+    justify-content: flex-start;
+}
+
+header #links a {
+    color: var(--text-sub);
+    font-weight: 400;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
+header #links a:hover { color: var(--gold-light); }
+
+/* AI Picks nav button */
+header #links .nav-ai-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border: 1px solid var(--gold-border);
+    border-radius: 20px;
+    color: var(--gold) !important;
+    font-size: 0.8rem;
+    letter-spacing: 0.8px;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+header #links .nav-ai-btn:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold-light) !important;
+}
+
+header > div:last-child {
+    gap: 16px;
+    color: var(--text-sub);
+    font-size: 0.84rem;
+    letter-spacing: 0.3px;
+}
+
+header > div:last-child span[style] {
+    color: var(--text);
+    font-weight: 600;
+}
+
+header .cart {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 5px 16px;
+    border: 1px solid var(--gold-border);
+    border-radius: 24px;
+    color: var(--text-sub);
+    transition: all 0.2s;
+}
+
+header .cart:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold-light);
+}
+
+header .cart #cart-items {
+    font-size: 0.68rem;
+    font-weight: 700;
+    background: var(--gold);
+    color: #0c0b09;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+}
+
+/* ── Main Layout ───────────────────────────────────────────── */
+main {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 60px);
+}
+
+/* ── Horizontal Filter Bar ─────────────────────────────────── */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 10px 28px;
+    background: var(--bg-filter);
+    border-bottom: 1px solid var(--gold-border);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.filter-label {
+    color: var(--gold);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    padding-right: 4px;
+    border-right: 1px solid var(--gold-border);
+    padding-right: 24px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.filter-field-label {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.price-range-label {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.filter-select {
+    background: var(--bg-input);
+    border: 1px solid rgba(200, 164, 90, 0.25);
+    color: var(--text);
+    border-radius: 5px;
+    padding: 5px 28px 5px 10px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    min-width: 130px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8a45a' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 13px;
+    transition: border-color 0.2s;
+}
+
+.filter-select option {
+    background: #26221a;
+    color: var(--text);
+}
+
+.filter-select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(200, 164, 90, 0.12);
+}
+
+.filter-price .price-sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-price input[type="range"] {
+    width: 180px;
+    height: 4px;
+    accent-color: var(--gold);
+    cursor: pointer;
+    margin: 0;
+}
+
+/* ── Product Grid ──────────────────────────────────────────── */
+main > .content {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding: 22px;
+    overflow-y: auto;
+    align-content: start;
+    background: var(--bg-page);
+}
+
+/* ── Product Card ──────────────────────────────────────────── */
+.product {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius);
+    /* no overflow:hidden — let content determine card height */
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    box-shadow: var(--shadow-card);
+}
+
+.product:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-hover);
+    box-shadow: var(--shadow-hover);
+}
+
+.product-title {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    padding: 14px 14px 6px;
+    margin: 0;
+    line-height: 1.35;
+    letter-spacing: 0.1px;
+}
+
+.product .photo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 4px 14px 10px;
+    gap: 12px;
+}
+
+/* ── Album art: fixed square container so image never overflows */
+.product .album-art {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(200, 164, 90, 0.15);
+    background: #111;
+}
+
+.product .album-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.22s ease;
+}
+
+.product .album-art img:hover {
+    transform: scale(1.06);
+}
+
+.product .price {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--gold);
+    letter-spacing: -0.3px;
+    line-height: 1;
+    align-self: flex-start;
+    padding-top: 2px;
+}
+
+.product-desc {
+    color: var(--text-sub);
+    font-size: 0.8rem;
+    padding: 8px 14px 0;
+    margin: 0 0 12px;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.product .add-button {
+    padding: 10px 12px 12px;
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid rgba(200, 164, 90, 0.1);
+}
+
+.product .add-button .btn-success {
+    flex: 1;
+    background: linear-gradient(135deg, #3a7a3a, #2d6b2d);
+    border: none;
+    color: #e8f5e8;
+    border-radius: 6px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.product .add-button .btn-success:hover {
+    background: linear-gradient(135deg, #458a45, #357035);
+}
+
+.product .add-button .btn-rec {
+    background: transparent;
+    border: 1px solid var(--gold-border);
+    color: var(--gold);
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.product .add-button .btn-rec:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold-light);
+}
+
+/* ── Recommendations Modal ─────────────────────────────────── */
+#recommendations-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rec-card {
+    background: #26221a;
+    border: 1px solid var(--gold-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    transition: border-color 0.2s;
+}
+
+.rec-card:hover { border-color: var(--gold); }
+
+.rec-title {
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 3px;
+    font-size: 1rem;
+}
+
+.rec-artist {
+    color: var(--gold);
+    margin: 0 0 5px;
+    font-size: 0.88rem;
+}
+
+.rec-reason {
+    color: var(--text-sub);
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+/* Loading spinner shown while fetching */
+.rec-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.rec-loading::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gold-border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: rec-spin 0.7s linear infinite;
+}
+
+@keyframes rec-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Content-Form (Cart / Profile) ─────────────────────────── */
+main > .content-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 26px;
+    overflow-y: auto;
+    background: var(--bg-page);
+    color: var(--text);
+}
+
+.content-form h2,
+.content-form h3,
+.content-form h4 { color: var(--text); }
+
+.content-form .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--gold-border);
+    margin-bottom: 8px;
+}
+
+.content-form .cart-item {
+    display: flex;
+    gap: 18px;
+    padding: 18px 0;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(200, 164, 90, 0.08);
+}
+
+.content-form .cart-item img {
+    width: 88px;
+    height: 88px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--gold-border);
+    flex-shrink: 0;
+}
+
+.content-form .cart-item h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 4px;
+}
+
+.content-form .cart-item p {
+    margin: 0 0 6px;
+    color: var(--text-sub);
+    font-size: 0.82rem;
+}
+
+.content-form .cart-item .price {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.content-form .cart-item .details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.content-form .quantity-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.content-form .quantity-controls .btn {
+    min-width: 32px;
+    height: 28px;
+    padding: 0 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-input);
+    border: 1px solid var(--gold-border);
+    color: var(--text);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+
+.content-form .quantity-controls .btn:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+}
+
+.content-form .quantity-controls span {
+    min-width: 44px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.content-form .quantity-controls .remove-btn {
+    margin-left: 8px;
+    background: rgba(180, 40, 40, 0.12);
+    border-color: rgba(180, 40, 40, 0.35);
+    color: #e07070;
+    padding: 0 10px;
+}
+
+.content-form .quantity-controls .remove-btn:hover {
+    background: rgba(180, 40, 40, 0.22);
+    border-color: #e07070;
+}
+
+.content-form .cart-total {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 18px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.content-form .photo {
+    display: flex;
+    gap: 12px;
+}
+
+.content-form .photo img {
+    width: 88px;
+    height: auto;
+    cursor: pointer;
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+}
+
+/* ── Bootstrap form overrides ──────────────────────────────── */
+.form-control,
+.form-select {
+    background-color: var(--bg-input) !important;
+    border-color: rgba(200, 164, 90, 0.22) !important;
+    color: var(--text) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--bg-input) !important;
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 3px rgba(200, 164, 90, 0.14) !important;
+    color: var(--text) !important;
+}
+
+.form-control::placeholder { color: var(--text-muted) !important; }
+.form-floating > label { color: var(--text-muted) !important; }
+
+/* ── Modal ─────────────────────────────────────────────────── */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.82);
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    padding: 30px;
+    backdrop-filter: blur(5px);
+}
+
+.modal-dialog {
+    width: 50vw;
+    background: #1d1a14;
+    border-radius: var(--radius);
+    border: 1px solid var(--gold-border);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #1d1a14;
+    border-bottom: 1px solid var(--gold-border);
+    color: var(--text);
+    padding: 16px 20px;
+}
+
+.modal-body { background: #1d1a14; padding: 0; }
+.modal-body img { width: 100%; display: block; }
+
+/* ── Errors / Messages ─────────────────────────────────────── */
+#errors, #messages {
+    position: fixed;
+    top: 68px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 500;
+    pointer-events: none;
+}
+
+#errors > div,
+#messages > div {
+    width: 320px;
+    pointer-events: all;
+}
+
+.alert {
+    margin-bottom: 4px !important;
+    border-radius: 8px !important;
+    background: #1d1a14 !important;
+    border-color: var(--gold-border) !important;
+    color: var(--text) !important;
+}
+
+/* ── Utilities ─────────────────────────────────────────────── */
+.visible   { display: block; }
+.hidden    { display: none !important; }
+.invisible { visibility: hidden !important; }
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    main > .content { grid-template-columns: repeat(2, 1fr); }
+    .filter-price input[type="range"] { width: 120px; }
+}
+
+@media (max-width: 580px) {
+    main > .content { grid-template-columns: 1fr; }
+    .filter-bar { gap: 16px; }
+    .content-form .cart-item { flex-direction: column; gap: 8px; }
+}
+
+
+/* darken the Bootstrap modal backdrop to match dark theme */
+.modal-backdrop {
+    background-color: #000;
+}

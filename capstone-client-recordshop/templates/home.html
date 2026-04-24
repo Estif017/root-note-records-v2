@@ -1,0 +1,41 @@
+<div class="filter-bar">
+    <span class="filter-label">FILTER</span>
+
+    <div class="filter-group">
+        <label class="filter-field-label">Category</label>
+        <select id="category-select" class="filter-select" onchange="setCategory(this)">
+            <option value="0">Show All</option>
+        </select>
+    </div>
+
+    <div class="filter-group filter-price">
+        <label class="filter-field-label">
+            Price &nbsp;<span class="price-range-label">$<span id="min-price-display">0</span> &ndash; $<span id="max-price-display">500</span></span>
+        </label>
+        <div class="price-sliders">
+            <input type="range" id="min-price" min="0" max="500" value="0"
+                   aria-label="Minimum price" onchange="setMinPrice(this)">
+            <input type="range" id="max-price" min="0" max="500" value="500"
+                   aria-label="Maximum price" onchange="setMaxPrice(this)">
+        </div>
+    </div>
+
+    <div class="filter-group">
+        <label class="filter-field-label">Genre</label>
+        <select id="subcategory-select" class="filter-select" onchange="setSubcategory(this)">
+            <option value="">Show All</option>
+            <option>Rock</option>
+            <option>Pop</option>
+            <option>Jazz</option>
+            <option>Hip-Hop</option>
+            <option>Folk</option>
+            <option>Reggae</option>
+            <option>R&B</option>
+            <option>Country</option>
+            <option>Alternative</option>
+            <option>Electronic</option>
+        </select>
+    </div>
+</div>
+
+<div id="content" class="content"></div>

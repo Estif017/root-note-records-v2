@@ -1,0 +1,43 @@
+{{#loggedin}}
+<div id="links">
+	<img src="images/logo.svg" alt="recordshop logo" />
+	<a href="#" onclick="loadHome()">Home</a>
+	<a href="#" onclick="editProfile()">Profile</a>
+	<a href="#" onclick="showCart()">View Cart</a>
+	<a href="#" class="nav-ai-btn" onclick="loadRecommendations(); return false;">
+		<i class="fa-solid fa-wand-magic-sparkles"></i> AI Picks
+	</a>
+</div>
+
+<div>
+	Welcome&nbsp;<span style="font-weight: 600; color: #e4e4f0;">{{username}}</span
+	>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+		href="#"
+		onclick="
+			userService.logout();
+			return false;
+		"
+		>logout</a
+	>
+	<div class="cart" onclick="showCart()">
+		<i class="fa-solid fa-cart-shopping"></i>
+		<div id="cart-items">0</div>
+	</div>
+</div>
+{{/loggedin}} {{#loggedout}}
+<div id="links">
+	<img src="images/logo.svg" alt="recordshop logo" />
+	<a href="#" onclick="loadHome()">Home</a>
+</div>
+
+<div>
+	<a
+		href="#"
+		onclick="
+			showLoginForm();
+			return false;
+		"
+		>login</a
+	>
+</div>
+{{/loggedout}}

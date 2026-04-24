@@ -1,0 +1,32 @@
+{{#products}}
+<article class="product">
+	<h3 class="product-title">{{name}}</h3>
+	<div class="photo">
+		<div class="album-art">
+			<img
+				src="images/products/{{imageUrl}}"
+				alt="{{name}} album cover"
+				onclick="showImageDetailForm(`{{name}}`,'images/products/{{imageUrl}}')"
+			/>
+		</div>
+		<span class="price" aria-label="Price: ${{price}}">${{price}}</span>
+	</div>
+	<p class="product-desc">{{description}}</p>
+	<div class="add-button" role="group" aria-label="Actions for {{name}}">
+		<button
+			class="btn btn-success"
+			onclick="cartService.addToCart({{productId}})"
+			aria-label="Add {{name}} to cart"
+		>
+			Add to Cart
+		</button>
+		<button
+			class="btn-rec"
+			onclick="loadRecommendations({{productId}})"
+			aria-label="Find similar items for {{name}}"
+		>
+			{{recLabel}}
+		</button>
+	</div>
+</article>
+{{/products}}
