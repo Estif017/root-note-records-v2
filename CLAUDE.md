@@ -39,9 +39,12 @@ Credentials are stored in `src/main/resources/application-local.properties` (not
 ```properties
 datasource.username=root
 datasource.password=<your_password>
+anthropic.api.key=<your_anthropic_key>
 ```
 
 The main `application.properties` sets `spring.profiles.active=local` and connects to `jdbc:mysql://localhost:3306/root_note_records` on port `8080`.
+
+LiveReload is disabled (`spring.devtools.livereload.enabled=false`) to prevent popup errors in the browser when Mustache partials (which have no `<head>`) are reloaded.
 
 ### Architecture
 
@@ -57,6 +60,18 @@ The main `application.properties` sets `spring.profiles.active=local` and connec
 **Auth flow:** `POST /login` returns a JWT bearer token. All protected endpoints expect `Authorization: Bearer <token>`. Shopping cart and profile endpoints resolve the current user via `Principal principal` → `userDao.getByUserName(principal.getName())`.
 
 **Shopping cart persistence:** Uses a composite primary key `(user_id, product_id)` with `ON DUPLICATE KEY UPDATE quantity = quantity + 1` — cart state lives in MySQL, not in memory.
+
+### AI Recommendations
+
+`RecommendationsController.java` handles `GET /products/{id}/recommendations`. It:
+
+1. Fetches the product from the DB by ID
+2. Calls the Anthropic Messages API (`https://api.anthropic.com/v1/messages`) using `RestTemplate`
+3. Uses model `claude-haiku-4-5` (current as of April 2026 — do not downgrade to retired `claude-3-haiku-20240307`)
+4. Strips markdown code fences from the response before returning, since the model sometimes wraps JSON in ` ```json ``` `
+5. Returns raw JSON array: `[{"title":"...","artist":"...","reason":"..."}]`
+
+The API key is read from `${anthropic.api.key}` — set it in `application-local.properties`. The endpoint is public (`@PreAuthorize("permitAll()")`).
 
 ### Tests
 
@@ -84,3 +99,24 @@ const config = { baseUrl: 'http://localhost:8080' }
 - `js/lib/` — vendored libraries (Axios, Bootstrap, jQuery, Mustache)
 
 The frontend is purely client-rendered. There is no routing library — views are swapped by injecting template HTML into named DOM containers.
+
+### AI Recommendations (Frontend)
+
+`getRecommendations(productId)` in `products-service.js` calls `GET /products/{id}/recommendations` and parses the JSON array. Errors are caught and logged; the UI renders nothing on failure.
+
+`loadRecommendations(productId)` in `application.js` renders the result into `#recommendations-container` via the `recommendations` Mustache template. When called with no argument (e.g., from the "AI Picks" header button), it picks a random product currently visible in the grid and fetches recommendations for it.
+
+### Theming
+
+`css/main.css` uses a luxury dark theme with CSS custom properties:
+
+- `--bg-page: #0c0b09` — near-black page background
+- `--bg-card: #1d1a14` — dark card background
+- `--gold: #c8a45a` — gold accent (borders, highlights, hover states)
+- `--text: #f0e8d8` — warm off-white body text
+
+### Known Gotchas
+
+- **Stale JWT after server restart:** If the backend restarts, the old token in `localStorage` will be rejected. Run `localStorage.clear()` in the browser console and log in again.
+- **Axios global header:** `axios.defaults.headers.common['Authorization']` is set on login and must be `delete`d (not overwritten) on logout — see `user-service.js`.
+- **Anthropic model versions:** Never use `claude-3-haiku-20240307` or any other `-YYYYMMDD`-suffixed Anthropic model — those are retired. Use the current model IDs from the Anthropic docs (e.g., `claude-haiku-4-5`).
