@@ -23,6 +23,7 @@ public class DatabaseConfig
                           @Value("${datasource.password}") String password)
     {
         basicDataSource = new BasicDataSource();
+        basicDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         basicDataSource.setUrl(url);
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
