@@ -84,25 +84,14 @@ class UserService {
     register (username, password, confirm)
     {
         const url = `${config.baseUrl}/register`;
-        const register = {
+        const body = {
             username: username,
             password: password,
             confirmPassword: confirm,
             role: 'USER'
         };
 
-        axios.post(url, register)
-             .then(response => {
-                 console.log(response.data)
-             })
-            .catch(error => {
-
-                const data = {
-                    error: "User registration failed."
-                };
-
-                templateBuilder.append("error", data, "errors")
-            });
+        return axios.post(url, body);
     }
 
     login (username, password)

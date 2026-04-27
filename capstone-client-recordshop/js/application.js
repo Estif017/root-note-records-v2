@@ -2,6 +2,39 @@ function showLoginForm() {
 	templateBuilder.build('login-form', {}, 'login');
 }
 
+function showRegisterForm() {
+	templateBuilder.build('register-form', {}, 'login');
+}
+
+function register() {
+	const username = document.getElementById('reg-username').value;
+	const password = document.getElementById('reg-password').value;
+	const confirm = document.getElementById('reg-confirm').value;
+
+	if (password !== confirm) {
+		cartService.showError('Passwords do not match.');
+		return;
+	}
+
+	userService.register(username, password, confirm)
+		.then(() => {
+			hideModalForm();
+			cartService.showSuccess('Account created! Please log in.');
+			showLoginForm();
+		})
+		.catch(() => {
+			cartService.showError('Registration failed. Username may already be taken.');
+		});
+}
+
+function addToCart(productId) {
+	if (!userService.isLoggedIn()) {
+		cartService.showError('Please login to add items to cart.');
+		return;
+	}
+	cartService.addToCart(productId);
+}
+
 function hideModalForm() {
 	templateBuilder.clear('login');
 }

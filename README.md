@@ -7,6 +7,13 @@ built with Java Spring Boot and Vanilla JS.
 
 ---
 
+## Demo Account
+
+- **Username:** `admin`
+- **Password:** `password`
+
+---
+
 ## Features
 
 - 🔐 JWT authentication with Spring Security and BCrypt password hashing
