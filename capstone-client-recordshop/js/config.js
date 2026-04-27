@@ -1,3 +1,1 @@
-const config = {
-    baseUrl: 'http://localhost:8080'
-}
+const config = { baseUrl: 'https://root-note-records-v2-production.up.railway.app' }
