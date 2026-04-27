@@ -1,9 +1,9 @@
 # 🎵 Root Note Records v2
 
-A full-stack e-commerce application for an online vinyl record store, 
+A full-stack e-commerce application for an online vinyl record store,
 built with Java Spring Boot and Vanilla JS.
 
-🔴 **Live Demo:** https://heartfelt-custard-736aaf.netlify.app
+🔴 **Live Demo:** [root-note-records.netlify.app](https://root-note-records.netlify.app)
 
 ---
 
@@ -20,20 +20,24 @@ built with Java Spring Boot and Vanilla JS.
 
 ## Tech Stack
 
-**Backend**
+### Backend
+
 - Java 17 + Spring Boot 2.7
 - Spring Security + JWT (stateless auth)
 - Plain JDBC — no ORM, hand-written SQL
 - MySQL 8.0
 
-**Frontend**
+### Frontend
+
 - Vanilla JS (no framework)
 - Axios, Mustache.js, Bootstrap 4
 
-**AI**
+### AI
+
 - Anthropic Claude API (product recommendations)
 
-**DevOps**
+### DevOps
+
 - Backend → Railway (auto-deploy on push)
 - Frontend → Netlify
 - CI → GitHub Actions
@@ -41,16 +45,21 @@ built with Java Spring Boot and Vanilla JS.
 ---
 
 ## Architecture
+
+```text
 Controller → DAO Interface → MySqlDAO → MySQL
+```
+
 - Stateless JWT auth via Spring Security filter chain
 - Shopping cart persisted with composite key (user_id, product_id)
-- AI recommendations via GET /products/{id}/recommendations
+- AI recommendations via `GET /products/{id}/recommendations`
 
 ---
 
 ## Local Setup
 
-### Backend
+### Backend Setup
+
 ```bash
 cd root-note-records/api
 # Create src/main/resources/application-local.properties with:
@@ -58,19 +67,21 @@ cd root-note-records/api
 # datasource.username=root
 # datasource.password=your_password
 # anthropic.api.key=your_key
-# jwt.secret=your_secret
+# jwt.secret=your_base64_secret
 
 ./mvnw spring-boot:run
 ```
 
-### Frontend
+### Frontend Setup
+
 ```bash
 # Update capstone-client-recordshop/js/config.js
 # Set baseUrl to http://localhost:8080
 # Open index.html in browser or use Live Server
 ```
 
-### Database
+### Database Setup
+
 ```bash
 mysql -u root -p root_note_records < root-note-records/api/database/create_database_recordshop.sql
 ```
@@ -80,7 +91,7 @@ mysql -u root -p root_note_records < root-note-records/api/database/create_datab
 ## API Endpoints
 
 | Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
+| ------ | -------- | ---- | ----------- |
 | POST | /login | Public | Get JWT token |
 | POST | /register | Public | Create account |
 | GET | /products | Public | List/search products |
